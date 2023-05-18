@@ -8,16 +8,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/history")
 public class HistoryController {
 
     @Autowired
     private HistoryService historyService;
 
-    @GetMapping("/{productId}")
-    public List<HistoryDTO> getHistoryForProduct(@PathVariable String productId) {
-        return historyService.getHistoryForProduct(productId);
-    }
+//    @GetMapping("/{productId}")
+//    public List<HistoryDTO> getHistoryForProduct(@PathVariable String productId) {
+//        return historyService.getHistoryForProduct(productId);
+//    }
 
     @PostMapping("/{listingId}")
     public HistoryDTO createHistory(@PathVariable String listingId, @RequestBody HistoryDTO historyDTO) {

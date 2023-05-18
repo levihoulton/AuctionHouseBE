@@ -19,12 +19,14 @@ public class Listing {
     private String username;
     private String product;
     private double price;
+    private String imageURL;
 
-    public Listing(String username, String product, double price) {
+    public Listing(String username, String product, double price, String imageURL) {
         this.id = new ObjectId().toString();
         this.username = username;
         this.product = product;
         this.price = price;
+        this.imageURL = imageURL;
     }
 
     // getters and setters

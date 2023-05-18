@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public void deleteUserByUsername(String username) {
-        userRepository.deleteByUsername(username);
+        userRepository.deleteById(username);
     }
 
 }

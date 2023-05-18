@@ -10,11 +10,12 @@ import com.project.AuctionHouse.repository.ListingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ListingService {
-
     @Autowired
     private ListingRepository listingRepository;
 
@@ -24,17 +25,29 @@ public class ListingService {
     public ListingDTO createListing(ListingDTO listingDTO) {
         UserDTO userDTO = userService.getUserByUsername(listingDTO.getUsername());
         if (userDTO == null) {
-//TODO throw an error, add logger for logger.error
+            //TODO throw an error, add logger for logger.error
         }
         User user = UserMapper.toEntity(userDTO);
-        Listing listing = new Listing(user.getUsername(), listingDTO.getProduct(), listingDTO.getPrice());
+        Listing listing = new Listing(user.getUsername(), listingDTO.getProduct(), listingDTO.getPrice(), listingDTO.getImageURL());
         Listing savedListing = listingRepository.save(listing);
         return ListingMapper.toDTO(savedListing);
     }
 
     public ListingDTO getListingById(String id) {
-        Listing listing = listingRepository.findById(id);
-        return ListingMapper.toDTO(listing);
+        Optional<Listing> listing = listingRepository.findById(id);
+        if(listing.isPresent()){
+            return ListingMapper.toDTO(listing.get());
+        }
+        return ListingMapper.toDTO(null);
+    }
+
+    public List<ListingDTO> getAllListings(){
+        List<Listing> listings = listingRepository.findAll();
+        List<ListingDTO> listingDTO = new ArrayList<>();
+        for (Listing listing : listings){
+            listingDTO.add(ListingMapper.toDTO(listing));
+        }
+        return listingDTO;
     }
 
     public ListingDTO updateListing(String id, ListingDTO listingDTO) {

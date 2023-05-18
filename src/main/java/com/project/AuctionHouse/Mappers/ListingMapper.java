@@ -14,6 +14,7 @@ public class ListingMapper {
         listing.setUsername(listingDTO.getUsername());
         listing.setProduct(listingDTO.getProduct());
         listing.setPrice(listingDTO.getPrice());
+        listingDTO.setImageURL(listing.getImageURL());
         return listing;
     }
 
@@ -23,6 +24,7 @@ public class ListingMapper {
         listingDTO.setUsername(listing.getUsername());
         listingDTO.setProduct(listing.getProduct());
         listingDTO.setPrice(listing.getPrice());
+        listingDTO.setImageURL(listing.getImageURL());
         return listingDTO;
     }
 
