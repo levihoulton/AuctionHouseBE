@@ -1,29 +1,25 @@
 package com.project.AuctionHouse.repository;
 
 import com.project.AuctionHouse.models.History;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class HistoryRepository {
+public interface HistoryRepository extends MongoRepository<History, String> {
+    @Override
+    Optional<History> findById(String s);
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    @Override
+    List<History> findAll();
 
-    public List<History> findByProductId(String productId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("productId").is(productId));
-        return mongoTemplate.find(query, History.class);
-    }
+    @Override
+    void deleteById(String s);
 
-    public History save(History history) {
-        return mongoTemplate.insert(history);
-    }
+    @Override
+    <S extends History> S save(S entity);
 
     // TODO add more methods
 

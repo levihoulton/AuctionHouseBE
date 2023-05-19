@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HistoryService {
@@ -20,16 +21,20 @@ public class HistoryService {
     @Autowired
     private ListingRepository listingRepository;
 
-    public List<HistoryDTO> getHistoryForProduct(String productId) {
-        List<History> historyList = historyRepository.findByProductId(productId);
-        return HistoryMapper.toDTOList(historyList);
-    }
+//    public List<HistoryDTO> getHistoryForProduct(String productId) {
+//        List<History> historyList = historyRepository.findByProductId(productId);
+//        return HistoryMapper.toDTOList(historyList);
+//    }
 
     public HistoryDTO createHistory(String listingId, double price) {
-        Listing listing = listingRepository.findById(listingId);
-        History history = new History(listing.getId(), price);
-        History savedHistory = historyRepository.save(history);
-        return HistoryMapper.toDTO(savedHistory);
+        try {
+            Optional<Listing> listing = listingRepository.findById(listingId);
+            History history = new History(listing.get().getId(), price);
+            History savedHistory = historyRepository.save(history);
+            return HistoryMapper.toDTO(savedHistory);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     // rest of HistoryService methods...

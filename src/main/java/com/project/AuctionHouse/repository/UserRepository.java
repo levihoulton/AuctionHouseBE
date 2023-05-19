@@ -1,42 +1,22 @@
 package com.project.AuctionHouse.repository;
 
 import com.project.AuctionHouse.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public class UserRepository {
+public interface UserRepository extends MongoRepository<User, String> {
+    User findByUsername(String username);
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    @Override
+    List<User> findAll();
 
-    public User save(User user) {
-        return mongoTemplate.insert(user);
-    }
+    @Override
+    <S extends User> S save(S entity);
 
-    public User findByUsername(String username) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(username));
-        return mongoTemplate.findOne(query, User.class);
-    }
-
-    public User update(User user) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(user.getUsername()));
-        Update update = new Update();
-        update.set("password", user.getPassword());
-        return mongoTemplate.findAndModify(query, update, User.class);
-    }
-
-    public void deleteByUsername(String username) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(username));
-        mongoTemplate.remove(query, User.class);
-    }
-
+    @Override
+    void deleteById(String s);
 }
 

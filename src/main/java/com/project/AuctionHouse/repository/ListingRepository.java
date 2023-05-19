@@ -1,38 +1,25 @@
 package com.project.AuctionHouse.repository;
 
 import com.project.AuctionHouse.models.Listing;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
-public class ListingRepository {
+public interface ListingRepository extends MongoRepository<Listing, String> {
+    @Override
+    <S extends Listing> S save(S entity);
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    @Override
+    List<Listing> findAll();
 
-    public Listing save(Listing listing) {
-        return mongoTemplate.insert(listing);
-    }
+    @Override
+    Optional<Listing> findById(String s);
 
-    public Listing findById(String id) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(new ObjectId(id)));
-        return mongoTemplate.findOne(query, Listing.class);
-    }
-
-    public Listing update(Listing listing) {
-        return mongoTemplate.save(listing);
-    }
-
-    public void deleteById(String username) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("id").is(username));
-        mongoTemplate.remove(query, Listing.class);
-    }
+    @Override
+    void deleteById(String s);
 }
 
 
