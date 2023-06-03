@@ -3,6 +3,9 @@ package com.project.AuctionHouse.Mappers;
 import com.project.AuctionHouse.dtos.UserDTO;
 import com.project.AuctionHouse.models.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserMapper {
 
     public static User toEntity(UserDTO userDTO) {
@@ -17,6 +20,17 @@ public class UserMapper {
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
         return userDTO;
+    }
+
+    public static List<UserDTO> toDTO(List<User> users){
+        List<UserDTO> userDTOS = new ArrayList<>();
+        users.forEach( user -> {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUsername(user.getUsername());
+            userDTO.setPassword(user.getPassword());
+            userDTOS.add(userDTO);
+        });
+        return userDTOS;
     }
 
 }

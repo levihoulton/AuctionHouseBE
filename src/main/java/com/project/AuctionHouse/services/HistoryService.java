@@ -26,6 +26,7 @@ public class HistoryService {
 //        return HistoryMapper.toDTOList(historyList);
 //    }
 
+    //TODO not tested
     public HistoryDTO createHistory(String listingId, double price) {
         try {
             Optional<Listing> listing = listingRepository.findById(listingId);

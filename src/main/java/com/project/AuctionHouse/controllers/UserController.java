@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/users")
@@ -24,6 +26,11 @@ public class UserController {
     public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
         UserDTO userDTO = userService.getUserByUsername(username);
         return ResponseEntity.ok(userDTO);
+    }
+    @GetMapping("/")
+    public ResponseEntity<List<UserDTO>> getUsers() {
+        List<UserDTO> userDTOS = userService.getAllUsers();
+        return ResponseEntity.ok(userDTOS);
     }
 
     @PutMapping("/{username}")
