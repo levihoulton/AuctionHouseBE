@@ -20,7 +20,7 @@ public class ListingController {
     @PostMapping("/")
     public ResponseEntity<ListingDTO> createListing(@RequestBody ListingDTO listingDTO) {
         ListingDTO createdListing = listingService.createListing(listingDTO);
-        if (createdListing != null){
+        if (createdListing != null) {
             return new ResponseEntity<>(createdListing, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -30,30 +30,57 @@ public class ListingController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ListingDTO> getListing(@PathVariable String id) {
-        ListingDTO listingDTO = listingService.getListingById(id);
-
-        if (listingDTO != null){
-            return new ResponseEntity<>(listingDTO, HttpStatus.FOUND);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            ListingDTO listingDTO = listingService.getListingById(id);
+            if (listingDTO != null) {
+                return new ResponseEntity<>(listingDTO, HttpStatus.FOUND);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            //TODO log e
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
+
     @GetMapping("/")
     public ResponseEntity<List<ListingDTO>> getAllListing() {
-        List<ListingDTO> listingDTO = listingService.getAllListings();
-        return ResponseEntity.ok(listingDTO);
+        try {
+            List<ListingDTO> listingDTO = listingService.getAllListings();
+            return new ResponseEntity<>(listingDTO, HttpStatus.FOUND);
+        } catch (Exception e) {
+            //TODO log e
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ListingDTO> updateListing(@PathVariable String id, @RequestBody ListingDTO listingDTO) {
-        ListingDTO updatedListing = listingService.updateListing(id, listingDTO);
-        return ResponseEntity.ok(updatedListing);
+        try {
+            ListingDTO updatedListing = listingService.updateListing(id, listingDTO);
+            if (updatedListing != null) {
+                return new ResponseEntity<>(updatedListing, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            //TODO log e
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteListing(@PathVariable String id) {
-        listingService.deleteListingById(id);
-        return ResponseEntity.noContent().build();
+        try {
+            if(listingService.deleteListingById(id)){
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            //TODO log e
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
 }
