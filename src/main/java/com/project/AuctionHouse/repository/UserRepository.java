@@ -5,10 +5,13 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
-    User findByUsername(String username);
+
+    @Override
+    Optional<User> findById(String s);
 
     @Override
     List<User> findAll();
@@ -18,5 +21,8 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     @Override
     void deleteById(String s);
+
+    @Override
+    boolean existsById(String s);
 }
 

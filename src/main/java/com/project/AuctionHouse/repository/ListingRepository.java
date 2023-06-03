@@ -20,6 +20,9 @@ public interface ListingRepository extends MongoRepository<Listing, String> {
 
     @Override
     void deleteById(String s);
+
+    @Override
+    boolean existsById(String s);
 }
 
 

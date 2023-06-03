@@ -3,6 +3,7 @@ package com.project.AuctionHouse.controllers;
 import com.project.AuctionHouse.dtos.ListingDTO;
 import com.project.AuctionHouse.services.ListingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,12 @@ public class ListingController {
     @GetMapping("/{id}")
     public ResponseEntity<ListingDTO> getListing(@PathVariable String id) {
         ListingDTO listingDTO = listingService.getListingById(id);
-        return ResponseEntity.ok(listingDTO);
+
+        if (listingDTO != null){
+            return new ResponseEntity<>(listingDTO, HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @GetMapping("/")
     public ResponseEntity<List<ListingDTO>> getAllListing() {
