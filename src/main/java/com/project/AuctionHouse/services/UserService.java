@@ -57,14 +57,13 @@ public class UserService {
 
     }
 
-    public ResponseEntity deleteUserByUsername(String username) {
-
+    public boolean deleteUserByUsername(String username) {
             if (userRepository.existsById(username)){
                 userRepository.deleteById(username);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return true;
             } else {
                 //TODO add logging
-                return null;
+                return false;
             }
     }
 

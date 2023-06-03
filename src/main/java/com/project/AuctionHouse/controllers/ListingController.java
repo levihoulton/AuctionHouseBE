@@ -20,7 +20,12 @@ public class ListingController {
     @PostMapping("/")
     public ResponseEntity<ListingDTO> createListing(@RequestBody ListingDTO listingDTO) {
         ListingDTO createdListing = listingService.createListing(listingDTO);
-        return ResponseEntity.created(null).body(createdListing);
+        if (createdListing != null){
+            return new ResponseEntity<>(createdListing, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            //TODO log already exist
+        }
     }
 
     @GetMapping("/{id}")
