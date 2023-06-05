@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Document(collection = "users")
 public class User {
 
@@ -17,6 +16,5 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NonNull
     private String password;
-
     // getters and setters
 }

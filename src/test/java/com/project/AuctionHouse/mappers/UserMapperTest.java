@@ -12,9 +12,7 @@ public class UserMapperTest {
 
     @Test
     public void testToEntity() {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUsername("john");
-        userDTO.setPassword("password");
+        UserDTO userDTO = new UserDTO("john", "password");
 
         User user = UserMapper.toEntity(userDTO);
 
@@ -24,9 +22,7 @@ public class UserMapperTest {
 
     @Test
     public void testToDTO() {
-        User user = new User();
-        user.setUsername("jane");
-        user.setPassword("secret");
+        User user = new User("jane", "secret");
 
         UserDTO userDTO = UserMapper.toDTO(user);
 
@@ -36,16 +32,11 @@ public class UserMapperTest {
 
     @Test
     public void testToDTOList() {
-        User user1 = new User();
-        user1.setUsername("john");
-        user1.setPassword("password");
+        User user1 = new User("john", "password");
 
-        User user2 = new User();
-        user2.setUsername("jane");
-        user2.setPassword("secret");
+        User user2 = new User("jane", "secret");
 
         List<User> users = Arrays.asList(user1, user2);
-
         List<UserDTO> userDTOs = UserMapper.toDTO(users);
 
         Assertions.assertEquals(2, userDTOs.size());
