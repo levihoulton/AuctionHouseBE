@@ -1,4 +1,4 @@
-package com.project.AuctionHouse.Mappers;
+package com.project.AuctionHouse.mappers;
 
 import com.project.AuctionHouse.dtos.ListingDTO;
 import com.project.AuctionHouse.models.Listing;
@@ -14,7 +14,7 @@ public class ListingMapper {
         listing.setUsername(listingDTO.getUsername());
         listing.setProduct(listingDTO.getProduct());
         listing.setPrice(listingDTO.getPrice());
-        listingDTO.setImageURL(listing.getImageURL());
+        listing.setImageURL(listingDTO.getImageURL());
         return listing;
     }
 

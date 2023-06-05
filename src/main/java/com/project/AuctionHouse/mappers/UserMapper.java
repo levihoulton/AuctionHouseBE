@@ -1,10 +1,9 @@
-package com.project.AuctionHouse.Mappers;
+package com.project.AuctionHouse.mappers;
 
 import com.project.AuctionHouse.dtos.UserDTO;
 import com.project.AuctionHouse.models.User;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserMapper {
 
@@ -23,14 +22,18 @@ public class UserMapper {
     }
 
     public static List<UserDTO> toDTO(List<User> users){
-        List<UserDTO> userDTOS = new ArrayList<>();
-        users.forEach( user -> {
-            UserDTO userDTO = new UserDTO();
-            userDTO.setUsername(user.getUsername());
-            userDTO.setPassword(user.getPassword());
-            userDTOS.add(userDTO);
-        });
-        return userDTOS;
+//        List<UserDTO> userDTOS = new ArrayList<>();
+//        users.forEach( user -> {
+//            UserDTO userDTO = new UserDTO();
+//            userDTO.setUsername(user.getUsername());
+//            userDTO.setPassword(user.getPassword());
+//            userDTOS.add(userDTO);
+//        });
+//        return userDTOS;
+
+        return users.stream()
+                .map(UserMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
 }
