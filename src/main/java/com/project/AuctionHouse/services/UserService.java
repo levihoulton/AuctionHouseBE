@@ -12,9 +12,11 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
-    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     public UserDTO createUser(UserDTO userDTO) {
         User user = UserMapper.toEntity(userDTO);
@@ -49,6 +51,15 @@ public class UserService {
 
     public boolean existByID(String username) {
         return userRepository.existsById(username);
+    }
+
+    public boolean authenticateUser(String username, String password){
+        Optional<User> user = userRepository.authenticateUser(username, password);
+        if(user.isPresent()){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

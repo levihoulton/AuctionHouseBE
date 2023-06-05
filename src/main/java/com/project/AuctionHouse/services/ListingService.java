@@ -15,12 +15,13 @@ import java.util.Optional;
 
 @Service
 public class ListingService {
-
-    @Autowired
     private ListingRepository listingRepository;
-
-    @Autowired
     private UserService userService;
+    @Autowired
+    public ListingService(ListingRepository listingRepository, UserService userService){
+        this.listingRepository = listingRepository;
+        this.userService = userService;
+    }
 
     public ListingDTO createListing(ListingDTO listingDTO) {
         UserDTO userDTO = userService.getUserByUsername(listingDTO.getUsername());
