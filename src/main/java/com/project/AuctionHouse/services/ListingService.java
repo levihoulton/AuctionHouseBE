@@ -25,7 +25,7 @@ public class ListingService {
     public ListingDTO createListing(ListingDTO listingDTO) {
         UserDTO userDTO = userService.getUserByUsername(listingDTO.getUsername());
         User user = UserMapper.toEntity(userDTO);
-        Listing listing = new Listing(user.getUsername(), listingDTO.getProduct(), listingDTO.getPrice(), listingDTO.getImageURL());
+        Listing listing = new Listing(user.getUsername(), listingDTO.getProduct(), listingDTO.getPrice(), listingDTO.getImageURL(), listingDTO.getEndDate(), listingDTO.getHighestBidder());
         Listing savedListing = listingRepository.save(listing);
         return ListingMapper.toDTO(savedListing);
     }
@@ -35,7 +35,6 @@ public class ListingService {
         if (listing.isPresent()) {
             return ListingMapper.toDTO(listing.get());
         } else {
-            //TODO add logging
             return null;
         }
     }
@@ -45,12 +44,15 @@ public class ListingService {
     }
 
     public ListingDTO updateListing(String id, ListingDTO listingDTO) {
-        Listing listing = ListingMapper.toEntity(listingDTO);
-        listing.setId(id);
-        Listing savedListing = listingRepository.save(listing);
-        return ListingMapper.toDTO(savedListing);
+        if (id.equals(listingDTO.getId())) {
+            Listing listing = ListingMapper.toEntity(listingDTO);
+            Listing savedListing = listingRepository.save(listing);
+            return ListingMapper.toDTO(savedListing);
+        } else {
+            //TODO log attempt to change id
+            return null;
+        }
     }
-
 
     public void deleteListingById(String id) {
         listingRepository.deleteById(id);
@@ -59,7 +61,6 @@ public class ListingService {
     public boolean existById(String id){
         return listingRepository.existsById(id);
     }
-
 
 }
 

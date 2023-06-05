@@ -16,6 +16,7 @@ public class ListingMapper {
         listing.setPrice(listingDTO.getPrice());
         listing.setEndDate(listingDTO.getEndDate());
         listing.setImageURL(listingDTO.getImageURL());
+        listing.setHighestBidder(listingDTO.getHighestBidder());
         return listing;
     }
 
@@ -27,6 +28,7 @@ public class ListingMapper {
         listingDTO.setPrice(listing.getPrice());
         listingDTO.setEndDate(listing.getEndDate());
         listingDTO.setImageURL(listing.getImageURL());
+        listingDTO.setHighestBidder(listing.getHighestBidder());
         return listingDTO;
     }
 

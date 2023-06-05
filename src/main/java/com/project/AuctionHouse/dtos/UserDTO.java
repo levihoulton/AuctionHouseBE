@@ -14,7 +14,5 @@ public class UserDTO {
     private String username;
     private String password;
 
-    // getters and setters
-
 }
 

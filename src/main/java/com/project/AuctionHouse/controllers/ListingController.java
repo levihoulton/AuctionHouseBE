@@ -66,17 +66,35 @@ public class ListingController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteListing(@PathVariable String id) {
+    public ResponseEntity<Boolean> deleteListing(@PathVariable String id) {
         try {
             if (listingService.existById(id)) {
                 listingService.deleteListingById(id);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(true, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             //TODO log e
-            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @PostMapping("/bid/{id}")
+    public ResponseEntity<Boolean> makeBid(@PathVariable String id, @RequestBody ListingDTO listingDTO){
+        try {
+            if(listingService.existById(id)){
+                ListingDTO listingDTOCur = listingService.getListingById(id);
+                listingDTOCur.setHighestBidder(listingDTO.getHighestBidder());
+                listingDTOCur.setPrice(listingDTO.getPrice());
+                listingService.updateListing(id, listingDTOCur);
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            //TODO log e
+            return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
         }
     }
 

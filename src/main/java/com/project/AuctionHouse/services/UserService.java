@@ -32,16 +32,15 @@ public class UserService {
         }
     }
 
-    public UserDTO updateUser(String username, UserDTO userDTO) {
-            User user = UserMapper.toEntity(userDTO);
-            User savedUser = userRepository.save(user);
-            return UserMapper.toDTO(savedUser);
+    public UserDTO updateUser(UserDTO userDTO) {
+        User user = UserMapper.toEntity(userDTO);
+        User savedUser = userRepository.save(user);
+        return UserMapper.toDTO(savedUser);
     }
 
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         return UserMapper.toDTO(users);
-
     }
 
     public void deleteUserByUsername(String username) {

@@ -21,12 +21,15 @@ public class Listing {
     private double price;
     private String endDate;
     private String imageURL;
+    private String highestBidder;
 
-    public Listing(String username, String product, double price, String imageURL) {
+    public Listing(String username, String product, double price, String imageURL, String endDate, String highestBidder) {
         this.id = new ObjectId().toString();
         this.username = username;
         this.product = product;
         this.price = price;
+        this.endDate = endDate;
+        this.highestBidder = highestBidder;
         this.imageURL = imageURL;
     }
 

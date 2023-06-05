@@ -17,6 +17,7 @@ public class ListingDTO {
     private double price;
     private String endDate;
     private String imageURL;
+    private String highestBidder;
 
     // getters and setters
 

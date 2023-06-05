@@ -10,19 +10,5 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
-    @Override
-    Optional<User> findById(String s);
-
-    @Override
-    List<User> findAll();
-
-    @Override
-    <S extends User> S save(S entity);
-
-    @Override
-    void deleteById(String s);
-
-    @Override
-    boolean existsById(String s);
 }
 

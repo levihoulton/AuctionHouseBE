@@ -63,10 +63,11 @@ public class UserController {
     public ResponseEntity<Boolean> updateUser(@PathVariable String username, @RequestBody UserDTO userDTO) {
         try {
             if (userService.existByID(username) && userDTO.getUsername().equals(username)) {
-                UserDTO updatedUser = userService.updateUser(username, userDTO);
+                UserDTO updatedUser = userService.updateUser(userDTO);
                 //TODO log updatedUser
                 return new ResponseEntity<>(true, HttpStatus.OK);
             } else {
+                //not found or username change
                 return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
