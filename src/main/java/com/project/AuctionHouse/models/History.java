@@ -25,6 +25,4 @@ public class History {
         this.date = new Date();
     }
 
-    // getters and setters
-
 }

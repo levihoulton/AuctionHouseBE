@@ -14,16 +14,15 @@ import java.util.Optional;
 @Service
 public class HistoryService {
 
-    @Autowired
     private HistoryRepository historyRepository;
-
-    @Autowired
     private ListingRepository listingRepository;
 
-//    public List<HistoryDTO> getHistoryForProduct(String productId) {
-//        List<History> historyList = historyRepository.findByProductId(productId);
-//        return HistoryMapper.toDTOList(historyList);
-//    }
+    @Autowired
+    public HistoryService(HistoryRepository historyRepository, ListingRepository listingRepository){
+        this.historyRepository = historyRepository;
+        this.listingRepository = listingRepository;
+    }
+
 
     //TODO not tested
     public HistoryDTO createHistory(String listingId, double price) {
