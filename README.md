@@ -18,6 +18,8 @@ To run the application, simply run the `AuctionHouseApplication` class as a Java
 
 Once the application is running, you can interact with it using a REST client like Postman or curl. The API endpoints are defined in the various controller classes, and provide CRUD (Create, Read, Update, Delete) operations for the different entities in the database.
 
+Postman api lib: https://grey-shuttle-436407.postman.co/workspace/cs.deals~664752e6-7b9c-4996-b677-68b556fb6671/collection/22858242-9fbfda99-8d76-4371-86c0-03456bb082f2?action=share&creator=22858242
+
 ## Project Structure
 
 The project is structured according to standard Spring Boot conventions. The main package for the project is `com.project.AuctionHouse`, and contains the main `AuctionHouseApplication` class.
