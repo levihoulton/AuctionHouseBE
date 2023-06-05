@@ -20,19 +20,14 @@ public class ListingController {
     @PostMapping("/")
     public ResponseEntity<ListingDTO> createListing(@RequestBody ListingDTO listingDTO) {
         ListingDTO createdListing = listingService.createListing(listingDTO);
-        if (createdListing != null) {
-            return new ResponseEntity<>(createdListing, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-            //TODO log already exist
-        }
+        return new ResponseEntity<>(createdListing, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ListingDTO> getListing(@PathVariable String id) {
         try {
-            ListingDTO listingDTO = listingService.getListingById(id);
-            if (listingDTO != null) {
+            if (listingService.existById(id)) {
+                ListingDTO listingDTO = listingService.getListingById(id);
                 return new ResponseEntity<>(listingDTO, HttpStatus.FOUND);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -55,24 +50,26 @@ public class ListingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ListingDTO> updateListing(@PathVariable String id, @RequestBody ListingDTO listingDTO) {
+    public ResponseEntity<Boolean> updateListing(@PathVariable String id, @RequestBody ListingDTO listingDTO) {
         try {
-            ListingDTO updatedListing = listingService.updateListing(id, listingDTO);
-            if (updatedListing != null) {
-                return new ResponseEntity<>(updatedListing, HttpStatus.CREATED);
+            if (listingService.existById(id)) {
+                ListingDTO updatedListing = listingService.updateListing(id, listingDTO);
+                //TODO log updatedListing
+                return new ResponseEntity<>(true, HttpStatus.CREATED);
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             //TODO log e
-            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteListing(@PathVariable String id) {
         try {
-            if(listingService.deleteListingById(id)){
+            if (listingService.existById(id)) {
+                listingService.deleteListingById(id);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

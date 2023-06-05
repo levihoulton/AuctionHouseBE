@@ -1,9 +1,9 @@
 package com.project.AuctionHouse.services;
 
-import com.project.AuctionHouse.Mappers.ListingMapper;
-import com.project.AuctionHouse.Mappers.UserMapper;
 import com.project.AuctionHouse.dtos.ListingDTO;
 import com.project.AuctionHouse.dtos.UserDTO;
+import com.project.AuctionHouse.mappers.ListingMapper;
+import com.project.AuctionHouse.mappers.UserMapper;
 import com.project.AuctionHouse.models.Listing;
 import com.project.AuctionHouse.models.User;
 import com.project.AuctionHouse.repository.ListingRepository;
@@ -21,21 +21,13 @@ public class ListingService {
 
     @Autowired
     private UserService userService;
-    private Object ResponseEntity;
 
     public ListingDTO createListing(ListingDTO listingDTO) {
-
         UserDTO userDTO = userService.getUserByUsername(listingDTO.getUsername());
         User user = UserMapper.toEntity(userDTO);
         Listing listing = new Listing(user.getUsername(), listingDTO.getProduct(), listingDTO.getPrice(), listingDTO.getImageURL());
         Listing savedListing = listingRepository.save(listing);
-        if (userDTO != null) {
-            return ListingMapper.toDTO(savedListing);
-        } else {
-            //TODO add logging
-            return null;
-        }
-
+        return ListingMapper.toDTO(savedListing);
     }
 
     public ListingDTO getListingById(String id) {
@@ -53,28 +45,19 @@ public class ListingService {
     }
 
     public ListingDTO updateListing(String id, ListingDTO listingDTO) {
-        if (listingRepository.existsById(id)) {
-            Listing listing = ListingMapper.toEntity(listingDTO);
-            listing.setId(id);
-            Listing savedListing = listingRepository.save(listing);
-            return ListingMapper.toDTO(savedListing);
-        } else {
-            //TODO add logging
-            return null;
-        }
-
+        Listing listing = ListingMapper.toEntity(listingDTO);
+        listing.setId(id);
+        Listing savedListing = listingRepository.save(listing);
+        return ListingMapper.toDTO(savedListing);
     }
 
 
-    public boolean deleteListingById(String id) {
-        if (listingRepository.existsById(id)) {
-            listingRepository.deleteById(id);
-            return true;
-        } else {
-            //TODO add logging
-            return false;
-        }
+    public void deleteListingById(String id) {
+        listingRepository.deleteById(id);
+    }
 
+    public boolean existById(String id){
+        return listingRepository.existsById(id);
     }
 
 
