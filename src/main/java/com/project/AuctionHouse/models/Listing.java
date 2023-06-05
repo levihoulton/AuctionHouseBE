@@ -19,6 +19,7 @@ public class Listing {
     private String username;
     private String product;
     private double price;
+    private String endDate;
     private String imageURL;
 
     public Listing(String username, String product, double price, String imageURL) {
@@ -28,7 +29,5 @@ public class Listing {
         this.price = price;
         this.imageURL = imageURL;
     }
-
-    // getters and setters
 
 }

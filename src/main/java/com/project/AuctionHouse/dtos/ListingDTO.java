@@ -15,6 +15,7 @@ public class ListingDTO {
     private String username;
     private String product;
     private double price;
+    private String endDate;
     private String imageURL;
 
     // getters and setters

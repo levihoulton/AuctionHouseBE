@@ -17,6 +17,7 @@ public class ListingMapperTest {
         listingDTO.setUsername("john");
         listingDTO.setProduct("Phone");
         listingDTO.setPrice(500.0);
+        listingDTO.setEndDate("1685990532");
         listingDTO.setImageURL("https://example.com/image.jpg");
 
         Listing listing = ListingMapper.toEntity(listingDTO);
@@ -26,6 +27,7 @@ public class ListingMapperTest {
         Assertions.assertEquals("Phone", listing.getProduct());
         Assertions.assertEquals(500.0, listing.getPrice());
         Assertions.assertEquals("https://example.com/image.jpg", listing.getImageURL());
+        Assertions.assertEquals("1685990532", listing.getEndDate());
     }
 
     @Test
@@ -36,6 +38,7 @@ public class ListingMapperTest {
         listing.setProduct("Laptop");
         listing.setPrice(1000.0);
         listing.setImageURL("https://example.com/laptop.jpg");
+        listing.setEndDate("1685990532");
 
         ListingDTO listingDTO = ListingMapper.toDTO(listing);
 
@@ -44,6 +47,7 @@ public class ListingMapperTest {
         Assertions.assertEquals("Laptop", listingDTO.getProduct());
         Assertions.assertEquals(1000.0, listingDTO.getPrice());
         Assertions.assertEquals("https://example.com/laptop.jpg", listingDTO.getImageURL());
+        Assertions.assertEquals("1685990532", listingDTO.getEndDate());
     }
 
     @Test
@@ -54,6 +58,7 @@ public class ListingMapperTest {
         listing1.setProduct("Phone");
         listing1.setPrice(500.0);
         listing1.setImageURL("https://example.com/phone.jpg");
+        listing1.setEndDate("1685990532");
 
         Listing listing2 = new Listing();
         listing2.setId("2L");
@@ -61,6 +66,7 @@ public class ListingMapperTest {
         listing2.setProduct("Laptop");
         listing2.setPrice(1000.0);
         listing2.setImageURL("https://example.com/laptop.jpg");
+        listing2.setEndDate("1685990532");
 
         List<Listing> listings = Arrays.asList(listing1, listing2);
 
@@ -72,10 +78,14 @@ public class ListingMapperTest {
         Assertions.assertEquals("Phone", listingDTOs.get(0).getProduct());
         Assertions.assertEquals(500.0, listingDTOs.get(0).getPrice());
         Assertions.assertEquals("https://example.com/phone.jpg", listingDTOs.get(0).getImageURL());
+        Assertions.assertEquals("1685990532", listing1.getEndDate());
+
         Assertions.assertEquals("2L", listingDTOs.get(1).getId());
         Assertions.assertEquals("jane", listingDTOs.get(1).getUsername());
         Assertions.assertEquals("Laptop", listingDTOs.get(1).getProduct());
         Assertions.assertEquals(1000.0, listingDTOs.get(1).getPrice());
         Assertions.assertEquals("https://example.com/laptop.jpg", listingDTOs.get(1).getImageURL());
+        Assertions.assertEquals("1685990532", listing2.getEndDate());
+
     }
 }
