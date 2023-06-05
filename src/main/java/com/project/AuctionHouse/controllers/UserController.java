@@ -1,6 +1,8 @@
 package com.project.AuctionHouse.controllers;
 
 import com.project.AuctionHouse.dtos.UserDTO;
+import com.project.AuctionHouse.mappers.UserMapper;
+import com.project.AuctionHouse.models.User;
 import com.project.AuctionHouse.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -89,7 +91,20 @@ public class UserController {
             //TODO log e
             return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
         }
+    }
 
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> login(@RequestBody UserDTO userDTO){
+        try {
+            User user = UserMapper.toEntity(userDTO);
+            if (userService.authenticateUser(user.getUsername(), user.getPassword())){
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
 }
