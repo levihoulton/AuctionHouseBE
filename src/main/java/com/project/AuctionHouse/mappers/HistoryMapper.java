@@ -1,4 +1,4 @@
-package com.project.AuctionHouse.Mappers;
+package com.project.AuctionHouse.mappers;
 
 import com.project.AuctionHouse.dtos.HistoryDTO;
 import com.project.AuctionHouse.models.History;

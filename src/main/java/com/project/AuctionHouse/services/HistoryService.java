@@ -1,6 +1,6 @@
 package com.project.AuctionHouse.services;
 
-import com.project.AuctionHouse.Mappers.HistoryMapper;
+import com.project.AuctionHouse.mappers.HistoryMapper;
 import com.project.AuctionHouse.dtos.HistoryDTO;
 import com.project.AuctionHouse.models.History;
 import com.project.AuctionHouse.models.Listing;
@@ -9,7 +9,6 @@ import com.project.AuctionHouse.repository.ListingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
