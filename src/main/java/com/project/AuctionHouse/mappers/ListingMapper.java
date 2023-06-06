@@ -32,7 +32,7 @@ public class ListingMapper {
         return listingDTO;
     }
 
-    public static List<ListingDTO> toDTOList(List<Listing> listings) {
+    public static List<ListingDTO> toDTO(List<Listing> listings) {
         return listings.stream()
                 .map(ListingMapper::toDTO)
                 .collect(Collectors.toList());

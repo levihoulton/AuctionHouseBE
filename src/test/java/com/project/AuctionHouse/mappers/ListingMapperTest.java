@@ -17,7 +17,7 @@ public class ListingMapperTest {
         listingDTO.setUsername("john");
         listingDTO.setProduct("Phone");
         listingDTO.setPrice(500.0);
-        listingDTO.setEndDate("1685990532");
+        listingDTO.setEndDate(Long.valueOf(1685990532));
         listingDTO.setImageURL("https://example.com/image.jpg");
 
         Listing listing = ListingMapper.toEntity(listingDTO);
@@ -38,7 +38,7 @@ public class ListingMapperTest {
         listing.setProduct("Laptop");
         listing.setPrice(1000.0);
         listing.setImageURL("https://example.com/laptop.jpg");
-        listing.setEndDate("1685990532");
+        listing.setEndDate(Long.valueOf(1685990532));
 
         ListingDTO listingDTO = ListingMapper.toDTO(listing);
 
@@ -58,7 +58,7 @@ public class ListingMapperTest {
         listing1.setProduct("Phone");
         listing1.setPrice(500.0);
         listing1.setImageURL("https://example.com/phone.jpg");
-        listing1.setEndDate("1685990532");
+        listing1.setEndDate(Long.valueOf(1685990532));
 
         Listing listing2 = new Listing();
         listing2.setId("2L");
@@ -66,11 +66,11 @@ public class ListingMapperTest {
         listing2.setProduct("Laptop");
         listing2.setPrice(1000.0);
         listing2.setImageURL("https://example.com/laptop.jpg");
-        listing2.setEndDate("1685990532");
+        listing2.setEndDate(Long.valueOf(1685990532));
 
         List<Listing> listings = Arrays.asList(listing1, listing2);
 
-        List<ListingDTO> listingDTOs = ListingMapper.toDTOList(listings);
+        List<ListingDTO> listingDTOs = ListingMapper.toDTO(listings);
 
         Assertions.assertEquals(2, listingDTOs.size());
         Assertions.assertEquals("1L", listingDTOs.get(0).getId());

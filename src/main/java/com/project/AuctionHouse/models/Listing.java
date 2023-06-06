@@ -19,11 +19,11 @@ public class Listing {
     private String username;
     private String product;
     private double price;
-    private String endDate;
+    private Long endDate;
     private String imageURL;
     private String highestBidder;
 
-    public Listing(String username, String product, double price, String imageURL, String endDate, String highestBidder) {
+    public Listing(String username, String product, double price, String imageURL, Long endDate, String highestBidder) {
         this.id = new ObjectId().toString();
         this.username = username;
         this.product = product;

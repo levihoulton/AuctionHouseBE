@@ -41,7 +41,7 @@ public class ListingService {
     }
 
     public List<ListingDTO> getAllListings() {
-        return ListingMapper.toDTOList(listingRepository.findAll());
+        return ListingMapper.toDTO(listingRepository.findAll());
     }
 
     public ListingDTO updateListing(String id, ListingDTO listingDTO) {
@@ -61,6 +61,22 @@ public class ListingService {
 
     public boolean existById(String id){
         return listingRepository.existsById(id);
+    }
+
+    public List<ListingDTO> getAllCurrentBids(String id){
+        long currentTime = System.currentTimeMillis();
+        List<Listing> listings = listingRepository.findAllCurrentBids(currentTime, id);
+
+        List<ListingDTO> listingDTOS = ListingMapper.toDTO(listings);
+        return listingDTOS;
+    }
+
+    public List<ListingDTO> getAllItemsWon(String id){
+        long currentTime = System.currentTimeMillis();
+        List<Listing> listings = listingRepository.findAllCurrentBids(currentTime, id);
+
+        List<ListingDTO> listingDTOS = ListingMapper.toDTO(listings);
+        return listingDTOS;
     }
 
 }

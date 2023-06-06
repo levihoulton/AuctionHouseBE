@@ -81,9 +81,9 @@ public class ListingController {
     }
 
     @PostMapping("/bid/{id}")
-    public ResponseEntity<Boolean> makeBid(@PathVariable String id, @RequestBody ListingDTO listingDTO){
+    public ResponseEntity<Boolean> makeBid(@PathVariable String id, @RequestBody ListingDTO listingDTO) {
         try {
-            if(listingService.existById(id)){
+            if (listingService.existById(id)) {
                 ListingDTO listingDTOCur = listingService.getListingById(id);
                 listingDTOCur.setHighestBidder(listingDTO.getHighestBidder());
                 listingDTOCur.setPrice(listingDTO.getPrice());
@@ -95,6 +95,16 @@ public class ListingController {
         } catch (Exception e) {
             //TODO log e
             return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @GetMapping("/bid/{id}")
+    public ResponseEntity<List<ListingDTO>> getBidsListById(@PathVariable String id) {
+        try {
+            List<ListingDTO> listingDTOS = listingService.getAllCurrentBids(id);
+            return new ResponseEntity<>(listingDTOS, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
 

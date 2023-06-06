@@ -15,11 +15,9 @@ public class ListingDTO {
     private String username;
     private String product;
     private double price;
-    private String endDate;
+    private Long endDate;
     private String imageURL;
     private String highestBidder;
-
-    // getters and setters
 
 }
 
