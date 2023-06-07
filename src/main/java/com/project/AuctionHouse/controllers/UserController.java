@@ -16,26 +16,29 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
+
     private UserService userService;
+    @Autowired
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
 
     @PostMapping("/")
-    public ResponseEntity<Boolean> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
         try {
             if (!userService.existByID(userDTO.getUsername())) {
                 UserDTO createdUser = userService.createUser(userDTO);
-                return new ResponseEntity<>(true, HttpStatus.CREATED);
+                return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>(false, HttpStatus.CONFLICT);
             }
         } catch (Exception e) {
-            //TODO log e
-            return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
+    public ResponseEntity<?> getUser(@PathVariable String username) {
         try {
             UserDTO userDTO = userService.getUserByUsername(username);
             if (userDTO != null) {
@@ -43,43 +46,39 @@ public class UserController {
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-
         } catch (Exception e) {
-            //TODO log e
-            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<UserDTO>> getUsers() {
+    public ResponseEntity<?> getUsers() {
         try {
             List<UserDTO> userDTOS = userService.getAllUsers();
             return new ResponseEntity<>(userDTOS, HttpStatus.OK);
         } catch (Exception e) {
-            //TODO log e
-            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
-    @PutMapping("/{username}")
-    public ResponseEntity<Boolean> updateUser(@PathVariable String username, @RequestBody UserDTO userDTO) {
+    @PutMapping("/")
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) {
         try {
-            if (userService.existByID(username) && userDTO.getUsername().equals(username)) {
+            if (userService.existByID(userDTO.getUsername())) {
                 UserDTO updatedUser = userService.updateUser(userDTO);
                 //TODO log updatedUser
-                return new ResponseEntity<>(true, HttpStatus.OK);
+                return new ResponseEntity<>(updatedUser, HttpStatus.OK);
             } else {
-                //not found or username change
+                //not found
                 return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            //TODO log e
-            return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
     @DeleteMapping("/{username}")
-    public ResponseEntity<Boolean> deleteUser(@PathVariable String username) {
+    public ResponseEntity<?> deleteUser(@PathVariable String username) {
         try {
             if (userService.existByID(username)) {
                 userService.deleteUserByUsername(username);
@@ -88,13 +87,12 @@ public class UserController {
                 return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            //TODO log e
-            return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody UserDTO userDTO){
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO){
         try {
             User user = UserMapper.toEntity(userDTO);
             if (userService.authenticateUser(user.getUsername(), user.getPassword())){
@@ -103,7 +101,7 @@ public class UserController {
                 return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
     }
 

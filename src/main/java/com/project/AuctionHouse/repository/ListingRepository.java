@@ -13,6 +13,16 @@ public interface ListingRepository extends MongoRepository<Listing, String> {
     @Query("{'endDate': { $gt: ?0 }, 'highestBidder': ?1}")
     List<Listing> findAllCurrentBids(long currentTime, String id);
 
+    @Query("{'endDate': { $lte: ?0 }, 'highestBidder': ?1}")
+    List<Listing> findAllItemsWon(long currentTime, String id);
+
+    @Query("{'endDate': { $gt: ?0 }, 'username': ?1}")
+    List<Listing> findAllActiveListings(long currentTime, String id);
+
+    @Query("{'endDate': { $lte: ?0 }, 'username': ?1}")
+    List<Listing> findAllCompletedListings(long currentTime, String id);
+
+
 }
 
 

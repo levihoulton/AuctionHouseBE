@@ -17,16 +17,15 @@ import java.util.Optional;
 public class ListingService {
     private ListingRepository listingRepository;
     private UserService userService;
+
     @Autowired
-    public ListingService(ListingRepository listingRepository, UserService userService){
+    public ListingService(ListingRepository listingRepository, UserService userService) {
         this.listingRepository = listingRepository;
         this.userService = userService;
     }
 
     public ListingDTO createListing(ListingDTO listingDTO) {
-        UserDTO userDTO = userService.getUserByUsername(listingDTO.getUsername());
-        User user = UserMapper.toEntity(userDTO);
-        Listing listing = new Listing(user.getUsername(), listingDTO.getProduct(), listingDTO.getPrice(), listingDTO.getImageURL(), listingDTO.getEndDate(), listingDTO.getHighestBidder());
+        Listing listing = new Listing(listingDTO.getUsername(), listingDTO.getProduct(), listingDTO.getPrice(), listingDTO.getImageURL(), listingDTO.getEndDate(), listingDTO.getHighestBidder());
         Listing savedListing = listingRepository.save(listing);
         return ListingMapper.toDTO(savedListing);
     }
@@ -44,26 +43,37 @@ public class ListingService {
         return ListingMapper.toDTO(listingRepository.findAll());
     }
 
-    public ListingDTO updateListing(String id, ListingDTO listingDTO) {
-        if (id.equals(listingDTO.getId())) {
-            Listing listing = ListingMapper.toEntity(listingDTO);
-            Listing savedListing = listingRepository.save(listing);
-            return ListingMapper.toDTO(savedListing);
-        } else {
-            //TODO log attempt to change id
-            return null;
-        }
+    public ListingDTO updateListing(ListingDTO listingDTO) {
+        Listing listing = ListingMapper.toEntity(listingDTO);
+        Listing savedListing = listingRepository.save(listing);
+        return ListingMapper.toDTO(savedListing);
     }
 
     public void deleteListingById(String id) {
         listingRepository.deleteById(id);
     }
 
-    public boolean existById(String id){
+    public boolean existById(String id) {
         return listingRepository.existsById(id);
     }
 
-    public List<ListingDTO> getAllCurrentBids(String id){
+    public List<ListingDTO> getAllActiveListings(String id) {
+        long currentTime = System.currentTimeMillis();
+        List<Listing> listings = listingRepository.findAllActiveListings(currentTime, id);
+
+        List<ListingDTO> listingDTOS = ListingMapper.toDTO(listings);
+        return listingDTOS;
+    }
+
+    public List<ListingDTO> getAllCompletedListings(String id) {
+        long currentTime = System.currentTimeMillis();
+        List<Listing> listings = listingRepository.findAllCompletedListings(currentTime, id);
+
+        List<ListingDTO> listingDTOS = ListingMapper.toDTO(listings);
+        return listingDTOS;
+    }
+
+    public List<ListingDTO> getAllCurrentBids(String id) {
         long currentTime = System.currentTimeMillis();
         List<Listing> listings = listingRepository.findAllCurrentBids(currentTime, id);
 
@@ -71,9 +81,9 @@ public class ListingService {
         return listingDTOS;
     }
 
-    public List<ListingDTO> getAllItemsWon(String id){
+    public List<ListingDTO> getAllItemsWon(String id) {
         long currentTime = System.currentTimeMillis();
-        List<Listing> listings = listingRepository.findAllCurrentBids(currentTime, id);
+        List<Listing> listings = listingRepository.findAllItemsWon(currentTime, id);
 
         List<ListingDTO> listingDTOS = ListingMapper.toDTO(listings);
         return listingDTOS;
