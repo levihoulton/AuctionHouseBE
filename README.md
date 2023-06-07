@@ -4,7 +4,7 @@ This repository contains the backend code for the Auction House project. The bac
 
 ## Getting Started
 
-To get started, clone this repository to your local machine and import the project into your IDE of choice. 
+To get started, clone this repository to your local machine and import the project into your IDE of choice, I use Intellij. 
 
 The backend uses MongoDB as the database, so you'll need to have MongoDB installed and running on your machine in order to run the application. You can download MongoDB from the official website at https://www.mongodb.com/download-center/community.
 
@@ -35,6 +35,45 @@ The `com.project.AuctionHouse.model` package contains the entity classes, which 
 The `com.project.AuctionHouse.dto` package contains the DTO (Data Transfer Object) classes, which are used to transfer data between the different layers of the application.
 
 The `com.project.AuctionHouse.mapper` package contains the mapper classes, which provide methods to convert between entity and DTO classes.
+
+## Database Schema
+
+The auction REST API utilizes a database with the following tables:
+
+### User Table
+
+The User table stores information about the users of the auction platform.
+
+| Column   | Type    | Description                    |
+|----------|---------|--------------------------------|
+| username | string  | User's username                |
+| password | string  | User's password (hashed)       |
+
+### Listing Table
+
+The Listing table represents the items being auctioned on the platform.
+
+| Column        | Type     | Description                            |
+|---------------|----------|----------------------------------------|
+| id            | string   | Unique identifier for the listing       |
+| username      | string   | Username of the listing owner           |
+| product       | string   | Name of the product being listed        |
+| price         | double   | Price of the product                    |
+| endDate       | long     | End date of the listing (epoch)     |
+| imageURL      | string   | URL of the image associated with listing|
+| highestBidder | string   | Username of the highest bidder          |
+
+### Bid Table
+
+The Bid table tracks the bids placed on listings.
+
+| Column      | Type     | Description                      |
+|-------------|----------|----------------------------------|
+| id          | string   | Unique identifier for the bid     |
+| username    | string   | Username of the bidder            |
+| listingId   | string   | Identifier of the listing being bid on |
+| price       | double   | Amount of the bid                 |
+
 
 ## Conclusion
 
