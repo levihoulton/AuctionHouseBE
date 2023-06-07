@@ -1,4 +1,4 @@
-package com.project.AuctionHouse.Mappers;
+package com.project.AuctionHouse.mappers;
 
 import com.project.AuctionHouse.dtos.ListingDTO;
 import com.project.AuctionHouse.models.Listing;
@@ -14,7 +14,9 @@ public class ListingMapper {
         listing.setUsername(listingDTO.getUsername());
         listing.setProduct(listingDTO.getProduct());
         listing.setPrice(listingDTO.getPrice());
-        listingDTO.setImageURL(listing.getImageURL());
+        listing.setEndDate(listingDTO.getEndDate());
+        listing.setImageURL(listingDTO.getImageURL());
+        listing.setHighestBidder(listingDTO.getHighestBidder());
         return listing;
     }
 
@@ -24,11 +26,13 @@ public class ListingMapper {
         listingDTO.setUsername(listing.getUsername());
         listingDTO.setProduct(listing.getProduct());
         listingDTO.setPrice(listing.getPrice());
+        listingDTO.setEndDate(listing.getEndDate());
         listingDTO.setImageURL(listing.getImageURL());
+        listingDTO.setHighestBidder(listing.getHighestBidder());
         return listingDTO;
     }
 
-    public static List<ListingDTO> toDTOList(List<Listing> listings) {
+    public static List<ListingDTO> toDTO(List<Listing> listings) {
         return listings.stream()
                 .map(ListingMapper::toDTO)
                 .collect(Collectors.toList());

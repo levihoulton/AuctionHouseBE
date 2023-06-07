@@ -19,16 +19,18 @@ public class Listing {
     private String username;
     private String product;
     private double price;
+    private Long endDate;
     private String imageURL;
+    private String highestBidder;
 
-    public Listing(String username, String product, double price, String imageURL) {
+    public Listing(String username, String product, double price, String imageURL, Long endDate, String highestBidder) {
         this.id = new ObjectId().toString();
         this.username = username;
         this.product = product;
         this.price = price;
+        this.endDate = endDate;
+        this.highestBidder = highestBidder;
         this.imageURL = imageURL;
     }
-
-    // getters and setters
 
 }

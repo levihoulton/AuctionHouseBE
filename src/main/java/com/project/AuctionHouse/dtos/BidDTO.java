@@ -5,20 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HistoryDTO {
-
+public class BidDTO {
     private String id;
-    private String productId;
+    private String username;
+    private String listingId;
     private double price;
-    private Date date;
-
-    // getters and setters
-
 }
-

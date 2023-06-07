@@ -1,30 +1,29 @@
 package com.project.AuctionHouse.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
 @Getter
 @Setter
-@Document(collection = "history")
-public class History {
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(collection = "bids")
+public class Bid {
     @Id
     private String id;
-    private String productId;
+    private String username;
+    private String listingId;
     private double price;
-    private Date date;
 
-    public History(String productId, double price) {
+    public Bid(String username, String listingId, double price){
         this.id = new ObjectId().toString();
-        this.productId = productId;
+        this.username = username;
+        this.listingId = listingId;
         this.price = price;
-        this.date = new Date();
     }
-
-    // getters and setters
-
 }
