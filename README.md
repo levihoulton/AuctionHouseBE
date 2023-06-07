@@ -59,7 +59,7 @@ The Listing table represents the items being auctioned on the platform.
 | username      | string   | Username of the listing owner           |
 | product       | string   | Name of the product being listed        |
 | price         | double   | Price of the product                    |
-| endDate       | long     | End date of the listing (timestamp)     |
+| endDate       | long     | End date of the listing (epoch)     |
 | imageURL      | string   | URL of the image associated with listing|
 | highestBidder | string   | Username of the highest bidder          |
 
