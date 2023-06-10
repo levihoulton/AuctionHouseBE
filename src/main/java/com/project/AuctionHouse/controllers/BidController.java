@@ -48,7 +48,16 @@ public class BidController {
         }
     }
 
-    //TODO implement get all bids
+    @GetMapping("/")
+    public ResponseEntity<?> getAllBids(){
+        try {
+            List<BidDTO> bidDTO = bidService.getAllBids();
+            return new ResponseEntity<>(bidDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
     //TODO implement get id bids
     //TODO implement get all bids for listing
     //TODO implement get id bids for listing

@@ -35,5 +35,10 @@ public class BidService {
         return BidMapper.toDTO(savedBid);
     }
 
+    public List<BidDTO> getAllBids(){
+        List<Bid> bids = bidRepository.findAll();
+        return BidMapper.toDTO(bids);
+    }
+
 
 }
